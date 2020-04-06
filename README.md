@@ -1,4 +1,4 @@
 # JavaScript_TypingSpeedCheck
 JavaScript (ES6) HTML5 CSS3 - Typing Speed Test
 
-![](Preview.JPG)
+![](JavaScript Typing Speed Test/Preview.JPG)
