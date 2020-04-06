@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="mainDiv">
+        <div class="centerDiv">
+            <h1>Welcome To The Typing Speed Test</h1>
+            <h2 id="msg"></h2>
+            <br>
+            <textarea id="mywords" cols="110" rows="10" placeholder="Start typing from here.."></textarea>
+            <br>
+            <button id="btn" class="mainbtn">Start</button>
+        </div>
+    </div>
+
+    <script>
+        const setOfWords = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
+            "Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."];
+
+        const msg = document.getElementById('msg');
+        const typeWords = document.getElementById('mywords');
+        const btn = document.getElementById('btn');
+        let startTime, endTime;
+
+        const playGame = () => {
+            let randomNumber = Math.floor(Math.random() * setOfWords.length);
+            msg.innerHTML = setOfWords[randomNumber];
+            let date = new Date();
+            startTime = date.getTime();
+            btn.innerHTML = 'Done';
+        }
+
+        const endPlay = () => {
+            let date = new Date();
+            endTime = date.getTime();
+
+            let totalTime = ((endTime - startTime) / 1000);
+            let totalStr = typeWords.value;
+            let wordCount = wordCounter(totalStr);
+            let speed = Math.round((wordCount / totalTime) * 60);
+
+            let finalMsg = "You have typed total at the speed of " + speed + " words per minute. ";
+
+            finalMsg += compareWords(msg.innerText, totalStr);
+            msg.innerHTML = finalMsg;
+        }
+        const wordCounter = (str) => {
+            let response = str.split(" ").length;
+            return response;
+        }
+        const compareWords = (str1, str2) => {
+            let word1 = str1.split(" ");
+            let word2 = str2.split(" ");
+            let count = 0;
+
+            word1.forEach(function (item, index) {
+                if (item == word2[index]) {
+                    count++;
+                }
+            })
+            let errorWords = (word1.length - count);
+            return (count + " words are correct out of " + word1.length + " words and the total number of errors are " + errorWords + ".");
+        }
+
+        btn.addEventListener('click', function () {
+            if (this.innerText == 'Start') {
+                typeWords.disabled = false;
+                playGame();
+                
+            } else if (this.innerHTML == 'Done') {
+                typeWords.disabled = true;
+                btn.innerHTML = 'Start';
+                endPlay();
+            }
+        })
+    </script>
+</body>
+
+</html>
